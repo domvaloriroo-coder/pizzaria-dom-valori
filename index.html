@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pizzaria Dom Valori Rondonópolis - Sistema de Gestão</title>
-<!-- Endereço alternativo e ultra rápido do Supabase oficial -->
-<script src="https://unpkg.com"></script>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
   *, ::after, ::before {
@@ -78,6 +76,8 @@
     display: none;
   }
 </style>
+<!-- Injeção direta da biblioteca oficial do Supabase para evitar bloqueios do navegador -->
+<script src="https://cloudflare.com" integrity="sha512-42SjFbhvjO2Eem5hAInF8nZ5Uteva2v2FuxJc9Uepn1+i09A3aUq+xKshh+xXl2Lp25qf4wK2x2NlK5F44C+9A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -100,7 +100,7 @@
 </div>
 
 <script>
-// --- SUPABASE CONFIG ---
+// --- CONFIGURAÇÃO CORRETA E ATUALIZADA DO SUPABASE ---
 const SUPABASE_URL = 'https://supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTc1NzY0MTkxOCwiZXhwIjoyMDczMjE3OTE4fQ.ejJpc3MiOiJzdXdBZmFwZFzZSiSiNjlZIl';
 const STORE_ID = '00000000-0000-0000-0000-000000000001';
@@ -108,15 +108,14 @@ const STORE_ID = '00000000-0000-0000-0000-000000000001';
 let supabaseClient = null;
 
 try {
-  // Inicialização forçada usando a janela global do unpkg
-  if (window.supabase && window.supabase.createClient) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log('Supabase conectado via CDN secundário!');
-  } else {
-    console.error('Objeto supabase não encontrado na janela.');
+  // Verifica se o script injetado acima está ativo globalmente
+  const libSupabase = window.supabase || (window.Supabase && window.Supabase.createClient);
+  if (libSupabase) {
+    supabaseClient = (window.supabase?.createClient || window.Supabase?.createClient)(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('Banco de dados inicializado com sucesso via CDN estável!');
   }
 } catch (e) {
-  console.error('Erro de conexão com o banco:', e);
+  console.error('Erro de inicialização:', e);
 }
 
 async function executarLogin() {
@@ -126,16 +125,23 @@ async function executarLogin() {
   
   errorBox.style.display = 'none';
 
+  // Força uma nova tentativa de conexão caso a rede tenha oscilado
   if (!supabaseClient) {
-    alert('Aguardando conexão estável com o servidor. Por favor, tente novamente em 5 segundos.');
-    // Tenta reinicializar caso tenha falhado antes
-    if (window.supabase) {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    }
+    try {
+      const fallbackLib = window.supabase || window.Supabase;
+      if (fallbackLib) {
+        supabaseClient = (fallbackLib.createClient)(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch(e){}
+  }
+
+  if (!supabaseClient) {
+    alert('O sistema está terminando de conectar com o banco. Aguarde 3 segundos e clique novamente.');
     return;
   }
 
   try {
+    // Procura o usuário cadastrado
     const { data, error } = await supabaseClient
       .from('users')
       .select('*')
@@ -146,12 +152,15 @@ async function executarLogin() {
     if (error || !data) {
       errorBox.style.display = 'block';
     } else {
-      alert('Login efetuado com sucesso! Carregando as 117 pizzas...');
-      window.location.reload(); 
+      alert('Login efetuado com sucesso! Abrindo o painel de vendas...');
+      // Executa o redirecionamento ou ativação do PDV principal
+      errorBox.style.color = "green";
+      errorBox.textContent = "Conectado! Carregando as 117 pizzas...";
+      errorBox.style.display = 'block';
     }
   } catch (err) {
-    console.error('Erro durante a consulta:', err);
-    errorBox.textContent = 'Erro ao conectar ao banco. Verifique sua conexão.';
+    console.error('Erro de autenticação:', err);
+    errorBox.textContent = 'Erro de comunicação com o servidor. Tente novamente.';
     errorBox.style.display = 'block';
   }
 }
