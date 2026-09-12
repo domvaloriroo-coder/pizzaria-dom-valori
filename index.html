@@ -153,15 +153,10 @@ async function executarLogin() {
       errorBox.style.display = 'block';
     } else {
       alert('Login efetuado com sucesso! Abrindo o painel de vendas...');
-      // Executa o redirecionamento ou ativação do PDV principal
-      errorBox.style.color = "green";
-      errorBox.textContent = "Conectado! Carregando as 117 pizzas...";
-      errorBox.style.display = 'block';
-    }
-  } catch (err) {
-    console.error('Erro de autenticação:', err);
-    errorBox.textContent = 'Erro de comunicação com o servidor. Tente novamente.';
-    errorBox.style.display = 'block';
+          }
+  } catch (e) {
+    alert("Erro na execução do login: " + e.message);
+    console.error(e);
   }
 }
 </script>
