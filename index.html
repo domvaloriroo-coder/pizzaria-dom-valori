@@ -1,6 +1,45 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>var __mr='footer',__md='4fzg4kz4.mule.page';document.addEventListener('DOMContentLoaded', function () {
+  var BAR_HEIGHT = 38;
+  var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!isDark) {
+    try {
+      var sample = getComputedStyle(document.body).backgroundColor;
+      if (sample === 'rgba(0, 0, 0, 0)' || sample === 'transparent') { sample = getComputedStyle(document.documentElement).backgroundColor; }
+      if (sample && sample !== 'rgba(0, 0, 0, 0)' && sample !== 'transparent') {
+        var m = sample.match(/\d+/g);
+        if (m) {
+          var brightness = (parseInt(m[0]) * 299 + parseInt(m[1]) * 587 + parseInt(m[2]) * 114) / 1000;
+          isDark = brightness < 128;
+        }
+      }
+    } catch (e) {}
+  }
+  var SHARED_CSS = '<style>' +
+    '@keyframes mulepage-svg-glow-dark{0%,100%{color:#ffffff}50%{color:#3b82f6}}' +
+    '@keyframes mulepage-svg-glow-light{0%,100%{color:#000000}50%{color:#3b82f6}}' +
+    '.mulepage-anim-dark{animation:mulepage-svg-glow-dark 2.5s ease-in-out infinite}' +
+    '.mulepage-anim-light{animation:mulepage-svg-glow-light 2.5s ease-in-out infinite}' +
+    '.mulepage-btn-dark{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0;transition:all 0.2s ease}' +
+    '.mulepage-btn-dark:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15)}' +
+    '.mulepage-btn-light{background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);border-radius:0;transition:all 0.2s ease}' +
+    '.mulepage-btn-light:hover{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.15)}' +
+    '.mulepage-close-dark{color:rgba(255,255,255,0.3);transition:color 0.2s ease}' +
+    '.mulepage-close-dark:hover{color:#ffffff}' +
+    '.mulepage-close-light{color:rgba(0,0,0,0.3);transition:color 0.2s ease}' +
+    '.mulepage-close-light:hover{color:#000000}' +
+    '#mulepage-footer-link{transition:opacity 0.2s ease}' +
+    '#mulepage-footer-link:hover{opacity:0.7}' +
+    '.mulepage-float{transition:box-shadow 0.2s ease;will-change:box-shadow}' +
+    '.mulepage-float:hover{box-shadow:0 6px 20px rgba(0,0,0,0.12),0 2px 6px rgba(0,0,0,0.08)}' +
+    '.mulepage-float-close{display:inline-flex;align-items:center;justify-content:center;max-width:0;margin-left:0;overflow:hidden;opacity:0;transition:max-width 0.2s ease,margin-left 0.2s ease,opacity 0.15s ease;padding:0;border:none;background:none;cursor:pointer;font-size:16px;line-height:1;font-weight:300;height:16px;will-change:max-width,opacity}' +
+    '.mulepage-float:hover .mulepage-float-close{max-width:14px;margin-left:4px;opacity:1}' +
+    '</style>';
+  document.head.insertAdjacentHTML('beforeend', SHARED_CSS);
+});
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pizzaria Dom Valori Rondonópolis — Sistema de Gestão</title>
@@ -64,25 +103,3 @@ tbody tr:hover{background:#f8f9ff}
 .toast.success{border-left:4px solid var(--success)}.toast.error{border-left:4px solid var(--danger)}
 @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;place-items:center;z-index:999}.modal-overlay.active{display:grid}
-.modal{background:var(--white);border-radius:var(--radius);padding:1.5rem;max-width:400px;width:90%;box-shadow:0 10px 40px rgba(0,0,0,.15);animation:modalIn .2s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-actions{display:flex;gap:.5rem;justify-content:flex-end}
-.pdv-container{display:flex;gap:.75rem;height:calc(100vh - 100px);min-height:350px}
-.pdv-left{flex:1;display:flex;flex-direction:column;gap:.4rem;min-width:280px}
-.pdv-right{flex:1.2;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);overflow:hidden}
-.pdv-type-selector{display:flex;gap:.3rem;margin-bottom:.3rem}
-.pdv-type-btn{flex:1;padding:.4rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;transition:all .15s;text-align:center;font-weight:600;font-size:.75rem;color:var(--text-secondary)}
-.pdv-type-btn:hover{border-color:var(--primary)}.pdv-type-btn.active{border-color:var(--primary);background:#ffeaea;color:var(--primary)}
-.pdv-type-btn .type-icon{font-size:1rem;display:block;margin-bottom:.1rem}
-.pdv-search-box{position:relative}.pdv-search-box input{padding-left:2rem;font-size:.85rem}.pdv-search-box .search-icon{position:absolute;left:.6rem;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:.85rem}
-.pdv-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem}
-.pdv-input-group{display:flex;flex-direction:column;gap:.15rem}
-.pdv-input-group label{font-size:.65rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase}
-.pdv-input-group input{font-size:.8rem;padding:.35rem .5rem}
-.pdv-input-group input[readonly]{background:var(--bg)}
-.pdv-include-btn{width:100%;padding:.5rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .15s;text-transform:uppercase}
-.pdv-include-btn:hover{background:var(--primary-hover)}
-.pdv-half-btn{width:100%;padding:.4rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .15s;text-transform:uppercase;margin-top:.3rem}
-.pdv-half-btn:hover{background:#000;color:#fff;border-color:#000}
-.pdv-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
-.pdv-action-btn{padding:.45rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:.15rem;font-size:.7rem;font-weight:600;color:var(--text-secondary)}
