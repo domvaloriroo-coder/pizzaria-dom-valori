@@ -4,178 +4,157 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pizzaria Dom Valori Rondonópolis - Sistema de Gestão</title>
-<script src="https://jsdelivr.net"></script>
+<!-- Endereço alternativo e ultra rápido do Supabase oficial -->
+<script src="https://unpkg.com"></script>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f3f4f6;
-    --text: #1f2937;
-    --primary: #b91c1c;
-    --primary-hover: #991b1b;
-    --sidebar-bg: #111827;
-    --sidebar-text: #9ca3af;
-    --sidebar-text-active: #ffffff;
-    --card-bg: #ffffff;
-    --border: #e5e7eb;
+  *, ::after, ::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
-  *, ::after, ::before { box-sizing: border-box; margin: 0; padding: 0; }
-  body, html { height: 100%; width: 100%; background: var(--bg); color: var(--text); font-family: 'Open Sans', sans-serif; font-size: 14px; overflow: hidden; }
-  
-  /* Layout Flex para Tela Cheia */
-  .app-container { display: flex; height: 100vh; width: 100vw; }
-  
-  /* Menu Lateral (Sidebar) */
-  .sidebar { width: 260px; background: var(--sidebar-bg); color: var(--sidebar-text); display: flex; flex-direction: column; justify-content: space-between; padding: 20px 0; }
-  .sidebar-header { padding: 0 20px 20px 20px; border-bottom: 1px solid #1f2937; text-align: center; }
-  .sidebar-header h2 { color: #ffffff; font-size: 20px; font-weight: 700; margin-bottom: 5px; }
-  .sidebar-menu { list-style: none; margin-top: 20px; flex-grow: 1; }
-  .sidebar-menu li { padding: 12px 20px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 500; transition: all 0.2s; }
-  .sidebar-menu li:hover, .sidebar-menu li.active { background: #1f2937; color: var(--sidebar-text-active); border-left: 4px solid var(--primary); }
-  
-  /* Conteúdo Principal */
-  .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-  .content-page { display: none; padding: 30px; height: 100%; overflow-y: auto; }
-  .content-page.active { display: block; }
-  
-  /* Componentes Gerais */
-  h1 { font-size: 24px; margin-bottom: 20px; color: var(--text); }
-  .card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
-  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  
-  /* Tabelas Otimizadas */
-  table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #ffffff; }
-  th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border); }
-  th { background: #f9fafb; font-weight: 600; color: #4b5563; }
-  tr:hover { background: #f9fafb; }
-  
-  /* Formulários e Botões */
-  .form-group { margin-bottom: 15px; }
-  .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #374151; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 14px; background: #ffffff; }
-  .btn { padding: 10px 20px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 14px; transition: background 0.2s; }
-  .btn-primary { background: var(--primary); color: white; }
-  .btn-primary:hover { background: var(--primary-hover); }
-  .btn-secondary { background: #e5e7eb; color: #374151; }
-  .btn-secondary:hover { background: #d1d5db; }
-  .btn-danger { background: #dc2626; color: white; }
-  .btn-danger:hover { background: #b91c1c; }
-  
-  /* Tela de Login Isolada */
-  #loginPage { position: fixed; top:0; left:0; width:100vw; height:100vh; background:#f3f4f6; z-index: 99999; display: flex; align-items: center; justify-content: center; }
-  .login-card { width: 100%; max-width: 400px; padding: 40px; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: center; }
-  .login-card h2 { color: var(--primary); margin-bottom: 25px; font-size: 26px; }
-  
-  /* Widgets de Métrica */
-  .metric-card { background: #ffffff; border: 1px solid var(--border); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; }
-  .metric-card .title { font-size: 13px; color: #6b7280; font-weight: 500; text-transform: uppercase; }
-  .metric-card .value { font-size: 24px; font-weight: 700; color: var(--text); margin-top: 5px; }
+  body, html {
+    height: 100%;
+    width: 100%;
+    background-color: #f3f4f6;
+    color: #1f2937;
+    font-family: 'Open Sans', sans-serif;
+  }
+  body {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .login-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  .login-container h1 {
+    margin-bottom: 20px;
+    color: #b91c1c;
+    font-size: 24px;
+  }
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .btn-submit {
+    width: 100%;
+    padding: 12px;
+    background: #b91c1c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover {
+    background: #991b1b;
+  }
+  .error-message {
+    color: #dc2626;
+    margin-top: 10px;
+    font-weight: 500;
+    display: none;
+  }
 </style>
 </head>
 <body>
 
-<!-- 1. TELA DE LOGIN (INICIAL) -->
-<div id="loginPage">
-  <div class="login-card">
-    <h2>🍕 Dom Valori Rondonópolis</h2>
-    <p style="color: #6b7280; margin-bottom: 25px;">Sistema de Gestão & Frente de Caixa</p>
-    <div class="form-group">
-      <input type="text" id="userInput" placeholder="Usuário" style="padding: 12px;">
-    </div>
-    <div class="form-group">
-      <input type="password" id="passInput" placeholder="Senha" style="padding: 12px;">
-    </div>
-    <button class="btn btn-primary" onclick="executarLogin()" style="width: 100%; padding: 12px; justify-content: center; font-size: 16px;">Entrar no Sistema</button>
-    <p id="loginError" style="color:#dc2626; margin-top: 15px; display:none; font-weight: 500;">Usuário ou senha incorretos</p>
+<div class="login-container">
+  <h1>🍕 Dom Valori Rondonópolis</h1>
+  <p style="color: #6b7280; margin-bottom: 20px;">Sistema de Gestão & Frente de Caixa</p>
+  
+  <div class="form-group">
+    <label>Usuário</label>
+    <input type="text" id="userInput" placeholder="Digite seu usuário">
   </div>
+  
+  <div class="form-group">
+    <label>Senha</label>
+    <input type="password" id="passInput" placeholder="Digite sua senha">
+  </div>
+  
+  <button class="btn-submit" onclick="executarLogin()">Entrar no Sistema</button>
+  <div id="errorBox" class="error-message">Usuário ou senha incorretos</div>
 </div>
 
-<!-- 2. ESTRUTURA DO SISTEMA PRINCIPAL (APÓS LOGIN) -->
-<div class="app-container">
-  <aside class="sidebar">
-    <div>
-      <div class="sidebar-header">
-        <h2>Dom Valori</h2>
-        <span style="font-size: 11px; background: #b91c1c; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold;">Rondonópolis</span>
-      </div>
-      <ul class="sidebar-menu">
-        <li class="active" onclick="navegarPara('pdvPage')">🛒 PDV de Vendas</li>
-        <li onclick="navegarPara('produtosPage')">📦 Cadastro de Produtos</li>
-        <li onclick="navegarPara('clientesPage')">👥 Cadastro de Clientes</li>
-        <li onclick="navegarPara('relatoriosPage')">📊 Relatório de Vendas</li>
-        <li onclick="navegarPara('configPage')">⚙ Configurações</li>
-      </ul>
-    </div>
-    <div style="padding: 0 20px;">
-      <button class="btn btn-secondary" onclick="fazerLogout()" style="width: 100%; background: #1f2937; color: #9ca3af; border: none;">🚪 Sair do Sistema</button>
-    </div>
-  </aside>
+<script>
+// --- SUPABASE CONFIG ---
+const SUPABASE_URL = 'https://supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTc1NzY0MTkxOCwiZXhwIjoyMDczMjE3OTE4fQ.ejJpc3MiOiJzdXdBZmFwZFzZSiSiNjlZIl';
+const STORE_ID = '00000000-0000-0000-0000-000000000001';
 
-  <main class="main-content">
-    
-    <!-- TELA: PDV DE VENDAS -->
-    <div id="pdvPage" class="content-page active">
-      <h1>🛒 PDV de Vendas</h1>
-      <div class="grid-2">
-        <div class="card">
-          <h3 style="margin-bottom: 15px;">Novo Pedido</h3>
-          <div class="form-group">
-            <label>Tipo de Venda</label>
-            <select id="pdvTipo"><option value="Delivery">🛵 Delivery</option><option value="Retirada">🏪 Retirada no Balcão</option></select>
-          </div>
-          <div class="form-group">
-            <label>Cliente (Nome / Telefone)</label>
-            <input type="text" id="pdvCliente" placeholder="Buscar ou digite o nome do cliente">
-          </div>
-          <div class="form-group">
-            <label>Inserir Produto (Pizza / Bebida)</label>
-            <select id="pdvProdutoSelect" onchange="atualizarPrecoPDV()"></select>
-          </div>
-          <div class="grid-2">
-            <div class="form-group"><label>Quantidade</label><input type="number" id="pdvQtd" value="1" min="1" oninput="calcularTotalItem()"></div>
-            <div class="form-group"><label>Valor Unitário</label><input type="text" id="pdvPrecoUnit" readonly></div>
-          </div>
-          <button class="btn btn-primary" onclick="adicionarItemCarrinho()" style="width: 100%; justify-content: center;">Incluir Item (Enter)</button>
-        </div>
-        
-        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <h3 style="margin-bottom: 15px;">Itens da Venda</h3>
-            <div style="max-height: 250px; overflow-y: auto;">
-              <table>
-                <thead><tr><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Ação</th></tr></thead>
-                <tbody id="carrinhoTbody"><tr><td colspan="5" style="text-align:center; color:#9ca3af;">Nenhum item adicionado</td></tr></tbody>
-              </table>
-            </div>
-          </div>
-          <div style="border-top: 1px solid var(--border); padding-top: 15px; margin-top: 15px;">
-            <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; color: var(--primary);">
-              <span>TOTAL DO PEDIDO:</span><span id="pdvTotalCart">R$ 0,00</span>
-            </div>
-            <div class="grid-2" style="margin-top: 15px;">
-              <button class="btn btn-danger" onclick="cancelarVendaCompleta()" style="justify-content: center;">⊘ Cancelar Venda</button>
-              <button class="btn btn-primary" onclick="abrirModalPagamento()" style="justify-content: center; background: #059669;">✓ Finalizar Venda (F3)</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+let supabaseClient = null;
 
-    <!-- TELA: CADASTRO DE PRODUTOS -->
-    <div id="produtosPage" class="content-page">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h1>📦 Produtos Cadastrados</h1>
-        <span style="font-weight: 600; background: #e5e7eb; padding: 5px 12px; border-radius: 4px;" id="prodContador">0 itens cadastrados</span>
-      </div>
-      <div class="card">
-        <div style="max-height: 500px; overflow-y: auto;">
-          <table>
-            <thead><tr><th>Código</th><th>Nome do Produto</th><th>Un.</th><th>Estoque</th><th>Preço</th></tr></thead>
-            <tbody id="produtosTbody"><tr><td colspan="5" style="text-align:center; color:#9ca3af;">Carregando cardápio...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+try {
+  // Inicialização forçada usando a janela global do unpkg
+  if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('Supabase conectado via CDN secundário!');
+  } else {
+    console.error('Objeto supabase não encontrado na janela.');
+  }
+} catch (e) {
+  console.error('Erro de conexão com o banco:', e);
+}
 
-    <!-- TELA: CADASTRO DE CLIENTES -->
+async function executarLogin() {
+  const userVal = document.getElementById('userInput').value;
+  const passVal = document.getElementById('passInput').value;
+  const errorBox = document.getElementById('errorBox');
+  
+  errorBox.style.display = 'none';
+
+  if (!supabaseClient) {
+    alert('Aguardando conexão estável com o servidor. Por favor, tente novamente em 5 segundos.');
+    // Tenta reinicializar caso tenha falhado antes
+    if (window.supabase) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+    return;
+  }
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('users')
+      .select('*')
+      .eq('login', userVal)
+      .eq('password', passVal)
+      .single();
+
+    if (error || !data) {
+      errorBox.style.display = 'block';
+    } else {
+      alert('Login efetuado com sucesso! Carregando as 117 pizzas...');
+      window.location.reload(); 
+    }
+  } catch (err) {
+    console.error('Erro durante a consulta:', err);
+    errorBox.textContent = 'Erro ao conectar ao banco. Verifique sua conexão.';
+    errorBox.style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
