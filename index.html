@@ -42,13 +42,6 @@ input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(211,47,47,.12)
 .login-logo p{color:var(--text-secondary);font-size:.85rem;margin-top:.25rem}
 .login-error{color:var(--danger);font-size:.85rem;margin-top:.75rem;text-align:center;display:none}
 </style>
-<!-- BIBLIOTECA SUPABASE EMBUTIDA DIRETO (IGNORA BLOQUEIOS DE REDE) -->
-<script>
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).supabase={})}(this,(function(e){"use strict";
-var t=function(e,t){return(t=function(e,t){var n=Object.create(null);return e&&Object.keys(e).forEach((function(r){if("default"!==r){var o=Object.getOwnPropertyDescriptor(e,r);Object.defineProperty(n,r,o.get?o:{enumerable:!0,get:function(){return e[r]}})}})),n.default=e,Object.freeze(n)}(t,n=Object.create(null)),Object.defineProperty(t,"__esModule",{value:!0}),t},n;
-e.createClient=function(e,n){return{from:function(t){return{select:function(){return{eq:function(n,r){return{eq:function(o,i){return{maybeSingle:function(){return new Promise((function(o){fetch(e+"/rest/v1/"+t+"?"+n+"=eq."+encodeURIComponent(r)+"&"+o+"=eq."+encodeURIComponent(i),{headers:{apikey:n,Authorization:"Bearer "+n,"Accept-Profile":"public"}}).then((function(e){return e.json()})).then((function(e){o({data:Array.isArray(e)?e[0]||null:e,error:null})})).catch((function(e){o({data:null,error:e})}))}))}}}}}}}}}}};
-Object.defineProperty(e,"__esModule",{value:!0})}));
-</script>
 </head>
 <body>
 
@@ -108,15 +101,22 @@ Object.defineProperty(e,"__esModule",{value:!0})}));
 const SUPABASE_URL = 'https://supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_uhB2sUHn1d3qU1G9A3aUq+xKshh+xx12Lp25qf4wK2x2N1K5F44C';
 
-let supabaseClient = null;
-
-try {
-  if (window.supabase) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log("Supabase embutido pronto.");
+// FUNÇÃO PURA DE REQUISIÇÃO (IGNORA DEPENDÊNCIAS EXTERNAS BLOQUEADAS)
+async function fazerRequisicaoSupabase(tabela, usuario, senha) {
+  const url = `${SUPABASE_URL}/rest/v1/${tabela}?login=eq.${encodeURIComponent(usuario)}&password=eq.${encodeURIComponent(senha)}`;
+  const resposta = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Accept': 'application/json',
+      'Prefer': 'return=representation'
+    }
+  });
+  if (!resposta.ok) {
+    throw new Error(`Erro na API: ${resposta.statusText}`);
   }
-} catch (e) {
-  console.error("Erro no banco:", e);
+  return await resposta.json();
 }
 
 async function executarLogin() {
@@ -134,33 +134,31 @@ async function executarLogin() {
     return;
   }
   
-  if (!supabaseClient) {
-    alert("Erro interno: Cliente de conexão indisponível.");
-    return;
-  }
-  
   try {
-    const { data, error } = await supabaseClient
-      .from('users')
-      .select('*')
-      .eq('login', userVal)
-      .eq('password', passVal)
-      .maybeSingle();
-      
-    if (error) {
-      alert("Erro ao validar dados: " + error.message);
-      return;
-    }
+    const data = await fazerRequisicaoSupabase('users', userVal, passVal);
     
-    if (data) {
-      alert("Login efetuado com sucesso! Abrindo o sistema...");
+    if (data && data.length > 0) {
+      alert("Login efetuado com sucesso!");
       document.getElementById('loginOverlay').style.display = 'none';
-      document.getElementById('headerUserInfo').textContent = '👤 ' + data.name;
+      document.getElementById('headerUserInfo').textContent = '👤 ' + data[0].name;
     } else {
       if (errorBox) errorBox.style.display = 'block';
     }
   } catch (err) {
     alert("Erro de execução: " + err.message);
+  }
+}
+
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+function logout() {
+  if (confirm("Deseja sair do sistema?")) {
+    location.reload();
   }
 }
 </script>
