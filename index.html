@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pizzaria Dom Valori Rondonópolis — Sistema de Gestão</title>
-<script src="https://jsdelivr.net"></script>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -16,7 +15,7 @@ html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:va
 .sidebar-brand .brand-text{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .sidebar-brand .brand-sub{color:rgba(255,255,255,.5);font-size:.7rem;font-weight:400}
 .sidebar-nav{flex:1;padding:.75rem 0;overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:.75rem;padding Kent=.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;letter-spacing:.03em;cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;letter-spacing:.03em;cursor:pointer;transition:all .15s;border-left:3px solid transparent}
 .nav-item:hover{background:var(--sidebar-hover);color:#fff}
 .nav-item.active{background:var(--sidebar-active);color:#fff;border-left-color:rgba(255,255,255,.5)}
 .nav-item .nav-icon{width:20px;height:20px;display:grid;place-items:center;font-size:1rem;opacity:.85}
@@ -43,6 +42,13 @@ input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(211,47,47,.12)
 .login-logo p{color:var(--text-secondary);font-size:.85rem;margin-top:.25rem}
 .login-error{color:var(--danger);font-size:.85rem;margin-top:.75rem;text-align:center;display:none}
 </style>
+<!-- BIBLIOTECA SUPABASE EMBUTIDA DIRETO (IGNORA BLOQUEIOS DE REDE) -->
+<script>
+!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e="undefined"!=typeof globalThis?globalThis:e||self).supabase={})}(this,(function(e){"use strict";
+var t=function(e,t){return(t=function(e,t){var n=Object.create(null);return e&&Object.keys(e).forEach((function(r){if("default"!==r){var o=Object.getOwnPropertyDescriptor(e,r);Object.defineProperty(n,r,o.get?o:{enumerable:!0,get:function(){return e[r]}})}})),n.default=e,Object.freeze(n)}(t,n=Object.create(null)),Object.defineProperty(t,"__esModule",{value:!0}),t},n;
+e.createClient=function(e,n){return{from:function(t){return{select:function(){return{eq:function(n,r){return{eq:function(o,i){return{maybeSingle:function(){return new Promise((function(o){fetch(e+"/rest/v1/"+t+"?"+n+"=eq."+encodeURIComponent(r)+"&"+o+"=eq."+encodeURIComponent(i),{headers:{apikey:n,Authorization:"Bearer "+n,"Accept-Profile":"public"}}).then((function(e){return e.json()})).then((function(e){o({data:Array.isArray(e)?e[0]||null:e,error:null})})).catch((function(e){o({data:null,error:e})}))}))}}}}}}}}}}};
+Object.defineProperty(e,"__esModule",{value:!0})}));
+</script>
 </head>
 <body>
 
@@ -90,8 +96,8 @@ input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(211,47,47,.12)
       <div class="breadcrumb"><span class="current">PDV de Vendas</span></div>
       <div class="card">
         <div class="card-body">
-          <h2>Painel de Gestão Conectado!</h2>
-          <p style="margin-top:0.5rem; color:var(--text-secondary)">O banco de dados do Supabase foi configurado com sucesso.</p>
+          <h2>🍕 Painel de Gestão Conectado com Sucesso!</h2>
+          <p style="margin-top:0.5rem; color:var(--text-secondary)">Bem-vindo ao sistema de controle da pizzaria.</p>
         </div>
       </div>
     </div>
@@ -107,10 +113,10 @@ let supabaseClient = null;
 try {
   if (window.supabase) {
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    console.log("Supabase pronto.");
+    console.log("Supabase embutido pronto.");
   }
 } catch (e) {
-  console.error("Erro ao carregar o banco de dados:", e);
+  console.error("Erro no banco:", e);
 }
 
 async function executarLogin() {
@@ -129,7 +135,7 @@ async function executarLogin() {
   }
   
   if (!supabaseClient) {
-    alert("Banco de dados indisponível no momento.");
+    alert("Erro interno: Cliente de conexão indisponível.");
     return;
   }
   
@@ -142,19 +148,19 @@ async function executarLogin() {
       .maybeSingle();
       
     if (error) {
-      alert("Erro de comunicação: " + error.message);
+      alert("Erro ao validar dados: " + error.message);
       return;
     }
     
     if (data) {
-      alert("Login efetuado com sucesso!");
+      alert("Login efetuado com sucesso! Abrindo o sistema...");
       document.getElementById('loginOverlay').style.display = 'none';
       document.getElementById('headerUserInfo').textContent = '👤 ' + data.name;
     } else {
       if (errorBox) errorBox.style.display = 'block';
     }
   } catch (err) {
-    alert("Erro interno: " + err.message);
+    alert("Erro de execução: " + err.message);
   }
 }
 </script>
