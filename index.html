@@ -11,7 +11,6 @@
 html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex;overflow:hidden}
 .sidebar{width:200px;min-width:200px;background:var(--sidebar-bg);display:flex;flex-direction:column;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.1);z-index:10}
 .sidebar-brand{padding:1.25rem 1rem;display:flex;align-items:center;gap:.65rem;border-bottom:1px solid rgba(255,255,255,.1)}
-.sidebar-brand .brand-icon{font-size:1.5rem}
 .sidebar-brand .brand-text{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .sidebar-brand .brand-sub{color:rgba(255,255,255,.5);font-size:.7rem}
 .sidebar-nav{flex:1;padding:.75rem 0;overflow-y:auto}
@@ -42,7 +41,7 @@ input:focus{border-color:var(--primary)}
 .pdv-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
 .pdv-action-btn{padding:.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;font-size:.75rem;font-weight:600;text-align:center}
 .pdv-action-btn.cancel{color:var(--danger)}
-.pdv-finalize-btn{width:100%;padding:.6rem;background:var(--success);color:#white;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700;color:#fff}
+.pdv-finalize-btn{width:100%;padding:.6rem;background:var(--success);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700}
 .pdv-cart-header{padding:.5rem .75rem;background:var(--bg);border-bottom:1px solid var(--border-light);font-weight:700;font-size:.8rem}
 .pdv-cart-table{flex:1;overflow-y:auto}
 table{width:100%;border-collapse:collapse}
@@ -68,7 +67,6 @@ tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-ligh
 </style>
 </head>
 <body>
-
 <div class="login-overlay" id="loginOverlay">
   <div class="login-box">
     <div class="login-logo">
@@ -136,3 +134,137 @@ tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-ligh
           
           <div class="pdv-inputs">
             <div class="form-group"><label>Quantidade</label><input type="number" id="pdvQty" value="1" min="1" oninput="recalcularItem()"></div>
+            <div class="form-group"><label>Valor Unitário</label><input type="text" id="pdvUnitPrice" value="R$ 0,00" readonly></div>
+            <div class="form-group"><label>Valor Total</label><input type="text" id="pdvItemTotal" value="R$ 0,00" readonly style="background:#e9ecef"></div>
+          </div>
+          
+          <button class="pdv-include-btn" onclick="incluirItemNoCarrinho()">Incluir (Enter)</button>
+          <button class="pdv-half-btn" onclick="abrirMeioAMeio()">🍕 Meio a Meio</button>
+          
+          <div class="pdv-action-grid">
+            <button class="pdv-action-btn cancel" onclick="cancelarVenda()">⊘ Cancelar Venda</button>
+            <button class="pdv-action-btn" onclick="removerUltimoItem()">Remover Item</button>
+          </div>
+          <button class="pdv-finalize-btn" onclick="abrirModalFinalizar()">✓ Finalizar Venda</button>
+        </div>
+        
+        <div class="pdv-right">
+          <div class="pdv-cart-header">🛒 Itens da Venda (<span id="cartCount">0</span> itens)</div>
+          <div class="pdv-cart-table">
+            <table>
+              <thead><tr><th>#</th><th>Código</th><th>Descrição</th><th>Qtd</th><th>R$ Unit.</th><th>R$ Total</th></tr></thead>
+              <tbody id="cartBody">
+                <tr><td colspan="6" style="text-align:center;color:var(--text-secondary);padding:3rem;">Nenhum item adicionado</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pdv-subtotal-bar"><span class="label">SUBTOTAL</span><span class="value" id="cartSubtotal">R$ 0,00</span></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="page" id="page-produtos"><div class="card"><h3>📦 Cadastro de Produtos</h3><p style="color:var(--text-secondary);margin-top:.5rem;">Cardápio local ativo na Vercel.</p></div></div>
+    <div class="page" id="page-clientes"><div class="card"><h3>👥 Cadastro de Clientes</h3><p style="color:var(--text-secondary);margin-top:.5rem;">Lista de contatos e endereços do caixa.</p></div></div>
+    <div class="page" id="page-relatorio"><div class="card"><h3>📊 Relatório de Vendas</h3><p style="color:var(--text-secondary);margin-top:.5rem;">Histórico diário de fechamento.</p></div></div>
+    <div class="page" id="page-config"><div class="card"><h3>⚙ Configurações</h3><p style="color:var(--text-secondary);margin-top:.5rem;">Ajustes gerais do caixa local.</p></div></div>
+  </div>
+</div>
+
+<div class="pdv-modal-overlay" id="finalizeModal">
+  <div class="pdv-modal">
+    <h3>💳 Finalizar Venda</h3>
+    <h2 id="modalTotal" style="color:var(--primary);margin:.5rem 0;">Total: R$ 0,00</h2>
+    <label>Forma de Pagamento</label>
+    <div class="payment-methods">
+      <div class="payment-card selected" id="pay-money" onclick="setPayment('dinheiro')">💵 Dinheiro</div>
+      <div class="payment-card" id="pay-pix" onclick="setPayment('pix')">📱 PIX</div>
+      <div class="payment-card" id="pay-debt" onclick="setPayment('debito')">💳 Débito</div>
+      <div class="payment-card" id="pay-credit" onclick="setPayment('credito')">💳 Crédito</div>
+    </div>
+    <div id="cashChangeSection">
+      <div class="form-group"><label>Valor Recebido</label><input type="number" id="cashReceived" placeholder="0.00" oninput="calcularTrocoCaixa()"></div>
+      <h4 style="margin-top:.5rem;color:var(--success)">Troco: <span id="lblChange">R$ 0,00</span></h4>
+    </div>
+    <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+      <button class="pdv-action-btn" onclick="fecharModalFinalizar()">Voltar</button>
+      <button class="pdv-finalize-btn" style="width:auto;" onclick="confirmarVendaFinal()">✓ Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PRODUTOS_LOCAL = [
+  { cod: "101", nome: "Pizza Calabresa Grande", preco: 45.00 },
+  { cod: "102", nome: "Pizza Muçarela Grande", preco: 42.00 },
+  { cod: "103", nome: "Pizza Frango com Catupiry", preco: 48.00 },
+  { cod: "104", nome: "Pizza Portuguesa Grande", preco: 50.00 },
+  { cod: "105", nome: "Pizza Meio a Meio Customizada", preco: 49.00 },
+  { cod: "201", nome: "Coca-Cola 2L", preco: 12.00 },
+  { cod: "202", nome: "Guaraná Antarctica 2L", preco: 10.00 },
+  { cod: "203", nome: "Água Mineral Sem Gás", preco: 4.00 }
+];
+
+let carrinho = [];
+let produtoSelecionado = null;
+let tipoVenda = 'retirada';
+let formaPagamento = 'dinheiro';
+let subtotalGeral = 0;
+
+function executarLogin() {
+  const u = document.getElementById('userInput').value.trim();
+  const p = document.getElementById('passInput').value.trim();
+  if (u === "Hudson" && p === "102030") {
+    alert("Login efetuado com sucesso!");
+    document.getElementById('loginOverlay').style.display = 'none';
+    document.getElementById('headerUserInfo').textContent = '👤 Hudson (Administrador)';
+  } else {
+    document.getElementById('errorBox').style.display = 'block';
+  }
+}
+
+function buscarProdutoNoCodigo() {
+  const query = document.getElementById('pdvSearch').value.toLowerCase().trim();
+  const box = document.getElementById('suggestionsBox');
+  box.innerHTML = '';
+  if (!query) { box.style.display = 'none'; return; }
+  const filtrados = PRODUTOS_LOCAL.filter(p => p.nome.toLowerCase().includes(query) || p.cod.includes(query));
+  if (filtrados.length > 0) {
+    box.style.display = 'block';
+    filtrados.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'suggestion-item';
+      div.textContent = `[${p.cod}] ${p.nome} - R$ ${p.preco.toFixed(2)}`;
+      div.onclick = () => selecionarProduto(p);
+      box.appendChild(div);
+    });
+  } else { box.style.display = 'none'; }
+}
+
+function selecionarProduto(p) {
+  produtoSelecionado = p;
+  document.getElementById('pdvSearch').value = p.nome;
+  document.getElementById('pdvUnitPrice').value = "R$ " + p.preco.toFixed(2).replace('.', ',');
+  document.getElementById('suggestionsBox').style.display = 'none';
+  recalcularItem();
+}
+
+function recalcularItem() {
+  if (!produtoSelecionado) return;
+  const qty = parseInt(document.getElementById('pdvQty').value) || 1;
+  const total = produtoSelecionado.preco * qty;
+  document.getElementById('pdvItemTotal').value = "R$ " + total.toFixed(2).replace('.', ',');
+}
+
+function incluirItemNoCarrinho() {
+  if (!produtoSelecionado) { alert("Selecione um produto antes de incluir!"); return; }
+  const qty = parseInt(document.getElementById('pdvQty').value) || 1;
+  const totalItem = produtoSelecionado.preco * qty;
+  carrinho.push({ cod: produtoSelecionado.cod, nome: produtoSelecionado.nome, qty: qty, preco: produtoSelecionado.preco, total: totalItem });
+  atualizarVisualCarrinho();
+  limparFormularioItem();
+}
+
+function atualizarVisualCarrinho() {
+  const tbody = document.getElementById('cartBody');
+  const count = document.getElementById('cartCount');
+  const sub = document.getElementById('cartSubtotal');
