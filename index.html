@@ -1,111 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizzaria Dom Valori Rondonópolis — Sistema de Gestão</title>
-<link href="https://googleapis.com" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--sidebar-bg:#c62828;--sidebar-hover:#b71c1c;--sidebar-active:#a31515;--primary:#d32f2f;--primary-hover:#c62828;--bg:#f0f2f5;--white:#fff;--text:#343a40;--text-secondary:#6c757d;--text-muted:#adb5bd;--border:#dee2e6;--border-light:#e9ecef;--danger:#dc3545;--danger-hover:#bb2d3b;--success:#198754;--warning:#fd7e14;--radius:6px;--font:'Open Sans',-apple-system,BlinkMacSystemFont,sans-serif}
-html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex;overflow:hidden}
-.sidebar{width:200px;min-width:200px;background:var(--sidebar-bg);display:flex;flex-direction:column;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.1);z-index:10}
-.sidebar-brand{padding:1.25rem 1rem;display:flex;align-items:center;gap:.65rem;border-bottom:1px solid rgba(255,255,255,.1)}
-.sidebar-brand .brand-icon{width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-size:1.2rem;cursor:pointer}
-.sidebar-brand .brand-text{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
-.sidebar-brand .brand-sub{color:rgba(255,255,255,.5);font-size:.7rem;font-weight:400}
-.sidebar-nav{flex:1;padding Tram=.75rem 0;overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;letter-spacing:.03em;cursor:pointer;transition:all .15s;border-left:3px solid transparent}
-.nav-item:hover{background:var(--sidebar-hover);color:#fff}
-.nav-item.active{background:var(--sidebar-active);color:#fff;border-left-color:rgba(255,255,255,.5)}
-.nav-item .nav-icon{width:20px;height:20px;display:grid;place-items:center;font-size:1rem;opacity:.85}
-.main-wrapper{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.top-header{background:var(--white);border-bottom:1px solid var(--border);padding:0 1.5rem;height:56px;min-height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.04);position:relative}
-.header-logo-text{font-size:1.1rem;font-weight:700;color:var(--sidebar-bg);letter-spacing:-.02em}
-#headerUserInfo{position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:.9rem;color:var(--text-secondary);font-weight:500}
-.content{flex:1;overflow:hidden;padding:.5rem .75rem .5rem}
-.page{display:none;height:100%;overflow-y:auto}.page.active{display:block}
-#page-pdv.active{overflow:hidden}
-table{table-layout:auto;width:100%}
-th,td{white-space:normal;padding:0.4rem 0.3rem;font-size:0.8rem;word-wrap:break-word}
-th{white-space:nowrap}
-.breadcrumb{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:var(--text-muted);margin-bottom:.5rem}
-.breadcrumb .current{color:var(--text-secondary);font-weight:600}
-.card{background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card-body{padding:1.25rem;overflow-x:hidden}
-.pdv-container{display:flex;gap:.75rem;height:calc(100vh - 100px);min-height:350px}
-.pdv-left{flex:1;display:flex;flex-direction:column;gap:.4rem;min-width:280px}
-.pdv-right{flex:1.2;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);overflow:hidden}
-.pdv-type-selector{display:flex;gap:.3rem;margin-bottom:.3rem}
-.pdv-type-btn{flex:1;padding:.4rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;transition:all .15s;text-align:center;font-weight:600;font-size:.75rem;color:var(--text-secondary)}
-.pdv-type-btn:hover{border-color:var(--primary)}.pdv-type-btn.active{border-color:var(--primary);background:#ffeaea;color:var(--primary)}
-.pdv-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem}
-.pdv-input-group{display:flex;flex-direction:column;gap:.15rem}
-.pdv-input-group label{font-size:.65rem;font-weight:600;color:var(--text-secondary)}
-.pdv-input-group input{font-size:.8rem;padding:.35rem .5rem}
-.pdv-include-btn{width:100%;padding:.5rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .15s;text-transform:uppercase}
-.pdv-include-btn:hover{background:var(--primary-hover)}
-.pdv-half-btn{width:100%;padding:.4rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .15s;text-transform:uppercase;margin-top:.3rem}
-.pdv-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
-.pdv-action-btn{padding:.45rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:.15rem;font-size:.7rem;font-weight:600;color:var(--text-secondary)}
-.pdv-action-btn:hover{background:var(--bg)}.pdv-action-btn.cancel{color:var(--danger)}.pdv-action-btn.cancel:hover{background:#fff5f5}
-.pdv-finalize-btn{width:100%;padding:.55rem;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:.35rem;font-size:.85rem;font-weight:700;color:var(--success)}
-.pdv-finalize-btn:hover{background:#f0fff4;border-color:var(--success)}
-.pdv-cart-header{padding:.4rem .6rem;background:var(--bg);border-bottom:1px solid var(--border-light);font-weight:700;font-size:.75rem}
-.pdv-cart-table{flex:1;overflow-y:auto}
-.pdv-cart-table thead th{position:sticky;top:0;background:var(--bg);font-size:.6rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase;padding:.35rem .5rem;text-align:left;border-bottom:1px solid var(--border)}
-.pdv-cart-table thead th.right{text-align:right}
-.pdv-cart-table tbody td{padding:.3rem .5rem;font-size:.75rem;border-bottom:1px solid var(--border-light)}
-.pdv-cart-table tbody td.right{text-align:right}
-.pdv-subtotal-bar{padding:.5rem .75rem;background:var(--primary);display:flex;align-items:center;justify-content:space-between}
-.pdv-subtotal-bar .label{color:#fff;font-size:.75rem;font-weight:600}
-.pdv-subtotal-bar .value{color:#fff;font-size:1.1rem;font-weight:700}
-.pdv-delivery-info{background:#fff0f0;border:1px solid #ffb3b3;border-radius:var(--radius);padding:.4rem .6rem;margin-bottom:.3rem;display:none}
-.pdv-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:1000}.pdv-modal-overlay.active{display:grid}
-.pdv-modal{background:var(--white);border-radius:var(--radius);padding:1.5rem;max-width:480px;width:95%;box-shadow:0 10px 40px rgba(0,0,0,.2)}
-.payment-methods{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:1rem}
-.payment-method-card{background:var(--white);border:2px solid var(--border);border-radius:var(--radius);padding:.75rem .5rem;text-align:center;cursor:pointer}
-.payment-method-card.selected{border-color:var(--primary);background:#ffeaea}
-.payment-method-card .pm-label{font-size:.75rem;font-weight:600}
-.cash-section{background:#fffbe6;border:1px solid #ffe58f;border-radius:var(--radius);padding:1rem;margin-bottom:1rem;display:none}
-.cash-section.visible{display:block}
-.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--sidebar-bg),var(--sidebar-active));display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{background:var(--white);border-radius:12px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.login-logo{text-align:center;margin-bottom:1.5rem}
-.login-logo h1{font-size:1.4rem;color:var(--sidebar-bg);margin:0}
-.login-error{color:var(--danger);font-size:.85rem;margin-top:.75rem;text-align:center;display:none}
-</style>
-</head>
-<body>
+<head><script>var __mr='',__md='4fzg4kz4.mule.page';document.addEventListener('DOMContentLoaded', function () {
+  var BAR_HEIGHT = 38;
 
-<div class="login-overlay" id="loginOverlay">
-  <div class="login-box">
-    <div class="login-logo">
-      <div style="font-size:3rem;color:var(--primary);">🏪</div>
-      <h1>Pizzaria Dom Valori Rondonópolis</h1>
-      <p>Sistema de Gestão & Caixa</p>
-    </div>
-    <div class="form-group" style="margin-bottom:1rem">
-      <label>Usuário</label>
-      <input type="text" id="userInput" placeholder="Digite seu usuário">
-    </div>
-    <div class="form-group" style="margin-bottom:1.5rem">
-      <label>Senha</label>
-      <input type="password" id="passInput" placeholder="Digite sua senha">
-    </div>
-    <button class="btn btn-primary" style="width:100%;padding:.85rem;" onclick="executarLogin()">Entrar no Sistema</button>
-    <div class="login-error" id="errorBox">Usuário ou senha incorretos</div>
-  </div>
-</div>
+  // --- detect page theme ---
+  var isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-<aside class="sidebar">
-  <div class="sidebar-brand">
-    <div class="brand-icon">🍕</div>
-    <div><div class="brand-text">Dom Valori</div><div class="brand-sub">Pizzaria Rondonópolis</div></div>
-  </div>
-  <nav class="sidebar-nav">
-    <div class="nav-item active" onclick="switchPage('pdv')"><span class="nav-icon">🛒</span><span>PDV de Vendas</span></div>
-    <div class="nav-item" onclick="switchPage('produtos')"><span class="nav-icon">📦</span><span>Produtos</span></div>
-    <div class="nav-item" onclick="switchPage('clientes')"><span class="nav-icon">👥</span><span>Clientes</span></div>
-    <div class="nav-item" onclick="switchPage('relatorio')"><span class="nav-icon">📊</span><span>Relatórios</span></div>
-    <div class="nav-item" onclick="switchPage('config')"><span class="nav-icon">⚙</span><span>Configurações</span></div>
+  // fallback: sample body/html background color
+  if (!isDark) {
+    try {
+      var sample = getComputedStyle(document.body).backgroundColor;
+      if (sample === 'rgba(0, 0, 0, 0)' || sample === 'transparent') {
+        sample = getComputedStyle(document.documentElement).backgroundColor;
+      }
+      if (sample && sample !== 'rgba(0, 0, 0, 0)' && sample !== 'transparent') {
+        var m = sample.match(/\d+/g);
+        if (m) {
+          var brightness = (parseInt(m) * 299 + parseInt(m) * 587 + parseInt(m) * 114) / 1000;
+          isDark = brightness < 128;
+        }
+      }
+    } catch (e) {}
+  }
+
+  // --- shared CSS (always injected into <head>) ---
+  var SHARED_CSS = '<style>' +
+    '@keyframes mulepage-svg-glow-dark{0%,100%{color:#ffffff}50%{color:#3b82f6}}' +
+    '@keyframes mulepage-svg-glow-light{0%,100%{color:#000000}50%{color:#3b82f6}}' +
+    '.mulepage-anim-dark{animation:mulepage-svg-glow-dark 2.5s ease-in-out infinite}' +
+    '.mulepage-anim-light{animation:mulepage-svg-glow-light 2.5s ease-in-out infinite}' +
+    '.mulepage-btn-dark{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:0;transition:all 0.2s ease}' +
+    '.mulepage-btn-dark:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15)}' +
+    '.mulepage-btn-light{background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.08);border-radius:0;transition:all 0.2s ease}' +
+    '.mulepage-btn-light:hover{background:rgba(0,0,0,0.08);border-color:rgba(0,0,0,0.15)}' +
+    '.mulepage-close-dark{color:rgba(255,255,255,0.3);transition:color 0.2s ease}' +
+    '.mulepage-close-dark:hover{color:#ffffff}' +
+    '.mulepage-close-light{color:rgba(0,0,0,0.3);transition:color 0.2s ease}' +
+    '.mulepage-close-light:hover{color:#000000}' +
+    '#mulepage-footer-link{transition:opacity 0.2s ease}' +
+    '#mulepage-footer-link:hover{opacity:0.7}' +
+    '.mulepage-float{transition:box-shadow 0.2s ease;will-change:box-shadow}' +
+    '.mulepage-float:hover{box-shadow:0 6px 20px rgba(0,0,0,0.12),0 2px 6px rgba(0,0,0,0.08)}' +
+    '.mulepage-float-close{display:inline-flex;align-items:center;justify-content:center;max-width:0;margin-left:0;overflow:hidden;opacity:0;transition:max-width 0.2s ease,margin-left 0.2s ease,opacity 0.15s ease;padding:0;border:none;background:none;cursor:pointer;font-size:16px;line-height:1;font-weight:300;height:16px;will-change:max-width,opacity}' +
+    '.mulepage-float:hover .mulepage-float-close{max-width:14px;margin-left:4px;opacity:1}' +
+    '</style>';
+
+  document.head.insertAdjacentHTML('beforeend', SHARED_CSS);
+
+  var ICON16 = '<svg width="16" height="16" viewBox="0 0 36 36" fill="none" xmlns="http://w3.org">' +
+    '<rect width="36" height="36" rx="0" fill="#FBF9F6"/><g clip-path="url(#c_top)">' +
+    '<path d="M6.387 21.732v8.895H18.762V28.5h2.32v1.16h8.121V28.5h1.16v-7.928h-1.16v-1.16h-4.64v-1.16h-1.16v-1.16h-1.16v-1.16h-1.16v-1.16h-1.16v-1.16h3.287v-1.934h3.48V9.357H16.442v3.48h-2.128V6.07h-2.32v2.127H9.674v3.48H7.547v10.055H6.387Z" fill="#000"/>' +
+    '<path d="M13.154 21.732v-4.447h1.16v-1.16h4.448v4.447h-1.16v1.16h-4.448Z" fill="#fff"/>' +
+    '<rect x="15.281" y="18.252" width="2.32" height="2.32" fill="#000"/>' +
+    '<path d="M21.082 27.34v-5.608h1.16v-1.16h5.801v1.16h1.16v5.608h-1.16V28.5h-5.801v-1.16h-1.16Z" fill="#fff"/>' +
+    '<path d="M26.883 21.732h-2.32v1.16h1.16v1.16h1.16v-2.32Z" fill="#000"/>' +
+    '<path d="M22.242 24.053v2.32h1.16v1.16h3.48v-1.16h-2.32v-1.16h-1.16v-1.16h-1.16Z" fill="#000"/>' +
+    '</g><defs><clipPath id="c_top"><rect width="24.75" height="24.75" fill="#fff" transform="translate(6 6)"/></clipPath></defs></svg>';
+
+  var ICON16_FOOT = ICON16.replace(/c_top/g, 'c_foot');
+
+  var BRAND_SVG_DARK = '<svg class="mulepage-anim-dark" width="58" height="16" viewBox="0 0 58 16" fill="none" xmlns="http://w3.org" style="user-select:none;">' +
+    '<text x="0" y="13" font-family="inherit" font-weight="600" font-size="13" fill="currentColor">MuleRun</text></svg>';
+
+  var BRAND_SVG_LIGHT = '<svg id="mulepage-footer-svg-text" class="mulepage-anim-light" width="56" height="15" viewBox="0 0 58 16" fill="none" xmlns="http://w3.org" style="user-select:none;">' +
+    '<text x="0" y="13" font-family="inherit" font-weight="600" font-size="13" fill="currentColor">MuleRun</text></svg>';
+
+  var bannerBg = isDark ? '#050505' : '#ffffff';
+  var bannerBorder = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+  var bannerColor = isDark ? '#fff' : '#000';
+  var bannerSubColor = isDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.45)';
+  var bannerTextColor = isDark ? 'rgba(255,255,255,0.65)' : 'rgba(0,0,0,0.65)';
+  var bannerArrowColor = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+  var bannerSepColor = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+  var bannerBtnClass = isDark ? 'mulepage-btn-dark' : 'mulepage-btn-light';
+  var bannerCloseClass = isDark ? 'mulepage-close-dark' : 'mulepage-close-light';
+  var bannerBrandSvg = isDark ? BRAND_SVG_DARK : BRAND_SVG_LIGHT.replace('mulepage-footer-svg-text', 'mulepage-bar-svg-text');
+
+  var BANNER = '<div id="mulepage-bar" dir="ltr" style="position:fixed;top:0;left:0;width:100%;height:' + BAR_HEIGHT + 'px;' +
+    'background:' + bannerBg + ';border-bottom:1px solid ' + bannerBorder + ';color:' + bannerColor + ';' +
+    'display:flex;align-items:center;justify-content:center;gap:10px;' +
+    'font-family:Inter,-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'Helvetica Neue\',sans-serif;' +
+    'font-size:13px;z-index:2147483647;letter-spacing:0.02em;">' +
+    '<span style="color:' + bannerSubColor + ';font-size:12px;text-transform:uppercase;letter-spacing:0.05em;">Built with</span>' +
+    '<span id="mulepage-bar-link" class="' + bannerBtnClass + '" style="display:inline-flex;align-items:center;gap:6px;' +
+    'padding:3px 10px 3px 6px;cursor:pointer;">' +
+    ICON16 + bannerBrandSvg + '</span>' +
+    '<span style="color:' + bannerSepColor + ';margin:0 2px;">|</span>' +
+    '<span style="color:' + bannerTextColor + ';">Create your own website in minutes</span>' +
+    '<span style="color:' + bannerArrowColor + ';margin-left:-2px;">\u2192</span>' +
+    '<button id="mulepage-bar-close" class="' + bannerCloseClass + '" style="position:absolute;right:16px;background:none;border:none;border-radius:0;' +
+    'font-size:18px;cursor:pointer;line-height:1;padding:4px;font-weight:300;">\u00d7</button>' +
+    '</div>';
+
+  var floatBg = isDark ? 'rgba(30,30,30,0.65)' : 'rgba(255,255,255,0.65)';
+  var floatBorder = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)';
+  var floatShadow = isDark
+    ? '0 4px 16px rgba(0,0,0,0.4),0 1px 4px rgba(0,0,0,0.3)'
+    : '0 4px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.06)';
+  var floatBrandSvg = isDark ? BRAND_SVG_LIGHT.replace('mulepage-anim-light', 'mulepage-anim-dark') : BRAND_SVG_LIGHT;
+  var floatCloseColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.3)';
+  var floatCloseHover = isDark ? '#ffffff' : '#000000';
+  var byColor = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)';
+
+  var FOOTER = '<div id="mulepage-footer" dir="ltr" class="mulepage-float" style="position:fixed !important;bottom:16px !important;right:16px !important;z-index:2147483646;' +
+    'display:inline-flex;align-items:center;padding:6px 12px 6px 6px;cursor:pointer;' +
+    'background:' + floatBg + ';border:1px solid ' + floatBorder + ';border-radius:4px;' +
+    'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);' +
+    'box-shadow:' + floatShadow + ';' +
+    'font-family:Inter,-apple-system,BlinkMacSystemFont,\'Segoe UI\',\'Helvetica Neue\',sans-serif;' +
+    'font-size:11px;font-weight:400;letter-spacing:0.03em;color:' + byColor + ';user-select:none;will-change:transform,opacity;">' +
+    '<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-right:5px;border-radius:2px;background:' + (isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)') + ';">' +
+    ICON16_FOOT + '</span>' +
+    '<span>made with&nbsp;</span>' +
+    '<span id="mulepage-footer-link" style="display:inline-flex;align-items:center;vertical-align:middle;margin-top:-1px;color:' + (isDark ? '#fff' : '#000') + ';">' +
+    floatBrandSvg + '</span>' +
+    '<button id="mulepage-footer-close" class="mulepage-float-close" style="color:' + floatCloseColor + ';" onmouseover="this.style.color=\'' + floatCloseHover + '\'" onmouseout="this.style.color=\'' + floatCloseColor + '\'">\u00d7</button>' +
+    '</div>';
+
+  function init() {
+    if (window.self !== window.top) return; 
+    var hideBar = false;
+    try { hideBar = localStorage.getItem('mulepage_hide_bar') === 'true'; } catch(e){}
+    if (!hideBar) {
+      document.body.style.paddingTop = BAR_HEIGHT + 'px';
+      document.body.insertAdjacentHTML('afterbegin', BANNER);
+      setupBarEvents();
+    }
+    var hideFoot = false;
+    try { hideFoot = localStorage.getItem('mulepage_hide_foot') === 'true'; } catch(e){}
+    if (!hideFoot) {
+      document.body.insertAdjacentHTML('beforeend', FOOTER);
+      setupFootEvents();
+    }
+  }
+
+  function setupBarEvents() {
+    var bar = document.getElementById('mulepage-bar');
+    var link = document.getElementById('mulepage-bar-link');
+    var close = document.getElementById('mulepage-bar-close');
+    var target = 'https://mulerun.com' + __md;
+    if (link) link.onclick = function() { window.open(target, '_blank'); };
+    if (bar) bar.onclick = function(e) {
+      if (e.target !== close && !close.contains(e.target) && e.target !== link && !link.contains(e.target)) {
