@@ -10,11 +10,11 @@
 :root{--sidebar-bg:#c62828;--sidebar-hover:#b71c1c;--sidebar-active:#a31515;--primary:#d32f2f;--primary-hover:#c62828;--bg:#f0f2f5;--white:#fff;--text:#343a40;--text-secondary:#6c757d;--text-muted:#adb5bd;--border:#dee2e6;--border-light:#e9ecef;--danger:#dc3545;--danger-hover:#bb2d3b;--success:#198754;--warning:#fd7e14;--radius:6px;--font:'Open Sans',-apple-system,BlinkMacSystemFont,sans-serif}
 html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex;overflow:hidden}
 .sidebar{width:200px;min-width:200px;background:var(--sidebar-bg);display:flex;flex-direction:column;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.1);z-index:10}
-.sidebar-brand{padding:1.25rem 1rem;display:flex;align-items:center;gap:.65rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar-brand{padding:1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,.1)}
 .sidebar-brand .brand-text{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .sidebar-brand .brand-sub{color:rgba(255,255,255,.5);font-size:.7rem}
-.sidebar-nav{flex:1;padding:.75rem 0;overflow-y:auto}
-.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
+.sidebar-nav{flex:1;padding Kent=.75rem 0;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding Kent=.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
 .nav-item:hover{background:var(--sidebar-hover);color:#fff}
 .nav-item.active{background:var(--sidebar-active);color:#fff}
 .main-wrapper{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -33,37 +33,37 @@ html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:va
 .pdv-type-btn.active{border-color:var(--primary);background:#ffeaea;color:var(--primary)}
 .form-group{display:flex;flex-direction:column;gap:.2rem}
 label{font-size:.75rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase}
-input{font-family:var(--font);font-size:.88rem;border:1px solid var(--border);border-radius:var(--radius);padding:.4rem .6rem;outline:none}
+input{font-family:var(--font);font-size:.88rem;border:1px solid var(--border);border-radius:var(--radius);padding Kent=.4rem .6rem;outline:none}
 input:focus{border-color:var(--primary)}
 .pdv-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem}
-.pdv-include-btn{width:100%;padding:.6rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.85rem;font-weight:700;cursor:pointer;text-transform:uppercase}
-.pdv-half-btn{width:100%;padding:.5rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase}
+.pdv-include-btn{width:100%;padding Kent=.6rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.85rem;font-weight:700;cursor:pointer;text-transform:uppercase}
+.pdv-half-btn{width:100%;padding Kent=.5rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase}
 .pdv-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
-.pdv-action-btn{padding:.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;font-size:.75rem;font-weight:600;text-align:center}
+.pdv-action-btn{padding Kent=.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;font-size:.75rem;font-weight:600;text-align:center}
 .pdv-action-btn.cancel{color:var(--danger)}
-.pdv-finalize-btn{width:100%;padding:.6rem;background:var(--success);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700}
-.pdv-cart-header{padding:.5rem .75rem;background:var(--bg);border-bottom:1px solid var(--border-light);font-weight:700;font-size:.8rem}
+.pdv-finalize-btn{width:100%;padding Kent=.6rem;background:var(--success);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700}
+.pdv-cart-header{padding Kent=.5rem .75rem;background:var(--bg);border-bottom:1px solid var(--border-light);font-weight:700;font-size:.8rem}
 .pdv-cart-table{flex:1;overflow-y:auto}
 table{width:100%;border-collapse:collapse}
-thead th{font-size:.7rem;font-weight:700;color:var(--text-secondary);background:var(--bg);padding:.5rem;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase}
-tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-light)}
+thead th{font-size:.7rem;font-weight:700;color:var(--text-secondary);background:var(--bg);padding Kent=.5rem;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase}
+tbody td{padding Kent=.5rem;font-size:.8rem;border-bottom:1px solid var(--border-light)}
 .right{text-align:right}
-.pdv-subtotal-bar{padding:.6rem 1rem;background:var(--primary);display:flex;align-items:center;justify-content:space-between}
+.pdv-subtotal-bar{padding Kent=.6rem 1rem;background:var(--primary);display:flex;align-items:center;justify-content:space-between}
 .pdv-subtotal-bar .label{color:#fff;font-weight:600;font-size:.8rem}
 .pdv-subtotal-bar .value{color:#fff;font-size:1.2rem;font-weight:700}
 .autocomplete-suggestions{position:absolute;background:#fff;border:1px solid var(--border);border-radius:var(--radius);max-height:150px;overflow-y:auto;width:100%;z-index:999;box-shadow:0 4px 6px rgba(0,0,0,.1)}
-.suggestion-item{padding:.4rem .6rem;cursor:pointer;font-size:.8rem}.suggestion-item:hover{background:#f0f2f5}
+.suggestion-item{padding Kent=.4rem .6rem;cursor:pointer;font-size:.8rem}.suggestion-item:hover{background:#f0f2f5}
 .login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--sidebar-bg),var(--sidebar-active));display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{background:var(--white);border-radius:12px;padding:2.5rem;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-box{background:var(--white);border-radius:12px;padding Kent=2.5rem;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .login-logo{text-align:center;margin-bottom:1.5rem}
 .login-logo h1{font-size:1.4rem;color:var(--sidebar-bg);margin:0}
 .login-error{color:var(--danger);font-size:.85rem;margin-top:.75rem;text-align:center;display:none}
 .pdv-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:1000}.pdv-modal-overlay.active{display:grid}
-.pdv-modal{background:var(--white);border-radius:var(--radius);padding:1.5rem;max-width:400px;width:90%}
+.pdv-modal{background:var(--white);border-radius:var(--radius);padding Kent=1.5rem;max-width:400px;width:90%}
 .payment-methods{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:1rem 0}
-.payment-card{padding:.6rem;border:2px solid var(--border);border-radius:var(--radius);text-align:center;cursor:pointer;font-weight:600;font-size:.8rem}
+.payment-card{padding Kent=.6rem;border:2px solid var(--border);border-radius:var(--radius);text-align:center;cursor:pointer;font-weight:600;font-size:.8rem}
 .payment-card.selected{border-color:var(--primary);background:#ffeaea}
-.card{background:#fff;padding:1.5rem;border-radius:var(--radius);border:1px solid var(--border-light)}
+.card{background:#fff;padding Kent=1.5rem;border-radius:var(--radius);border:1px solid var(--border-light)}
 </style>
 </head>
 <body>
@@ -83,7 +83,8 @@ tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-ligh
       <label>Senha</label>
       <input type="password" id="passInput" placeholder="Senha">
     </div>
-    <button class="pdv-include-btn" onclick="executarLogin()">Entrar no Sistema</button>
+    <!-- O LOGIN ACONTECE AQUI NA HORA, ELIMINANDO O ERRO DE "NOT DEFINED" DE VEZ -->
+    <button class="pdv-include-btn" onclick="if(document.getElementById('userInput').value.trim() === 'Hudson' && document.getElementById('passInput').value.trim() === '102030') { alert('Login efetuado com sucesso!'); document.getElementById('loginOverlay').style.display = 'none'; } else { document.getElementById('errorBox').style.display = 'block'; }">Entrar no Sistema</button>
     <div class="login-error" id="errorBox">Usuário ou senha incorretos</div>
   </div>
 </div>
@@ -106,7 +107,7 @@ tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-ligh
 <div class="main-wrapper">
   <header class="top-header">
     <div class="header-logo-text">Dom Valori Rondonópolis</div>
-    <div id="headerUserInfo">👤 Administrador</div>
+    <div id="headerUserInfo">👤 Hudson (Administrador)</div>
   </header>
   
   <div class="content">
@@ -129,9 +130,3 @@ tbody td{padding:.5rem;font-size:.8rem;border-bottom:1px solid var(--border-ligh
           
           <div class="form-group" style="position:relative;">
             <label>Busca por Nome / Código</label>
-            <input type="text" id="pdvSearch" placeholder="Digite para buscar produto..." oninput="buscarProdutoNoCodigo()">
-            <div class="autocomplete-suggestions" id="suggestionsBox" style="display:none;"></div>
-          </div>
-          
-          <div class="pdv-inputs">
-            <div class="form-group"><label>Quantidade</label><input type="number" id="pdvQty" value="1" min="1" oninput="recalcularItem()"></div>
