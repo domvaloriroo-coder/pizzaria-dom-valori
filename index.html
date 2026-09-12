@@ -11,11 +11,10 @@
 html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px;display:flex;overflow:hidden}
 .sidebar{width:200px;min-width:200px;background:var(--sidebar-bg);display:flex;flex-direction:column;height:100vh;box-shadow:2px 0 8px rgba(0,0,0,.1);z-index:10}
 .sidebar-brand{padding:1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:.5rem}
-.sidebar-brand .brand-icon{font-size:1.4rem}
 .sidebar-brand .brand-text{color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .sidebar-brand .brand-sub{color:rgba(255,255,255,.5);font-size:.7rem}
 .sidebar-nav{flex:1;padding:.75rem 0;overflow-y:auto;display:flex;flex-direction:column;height:100%}
-.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding Kent=.65rem 1.25rem;color:rgba(255,255,255,.7);font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s}
 .nav-item:hover{background:var(--sidebar-hover);color:#fff}
 .nav-item.active{background:var(--sidebar-active);color:#fff}
 .main-wrapper{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -27,26 +26,26 @@ html,body{height:100%}body{font-family:var(--font);background:var(--bg);color:va
 .breadcrumb{font-size:.75rem;color:var(--text-muted);margin-bottom:.5rem}
 .breadcrumb .current{color:var(--text-secondary);font-weight:600}
 .pdv-container{display:flex;gap:.75rem;height:calc(100vh - 120px)}
-.pdv-left{flex:1;display:flex;flex-direction:column;gap:.5rem;min-width:280px;background:var(--white);padding:1rem;border-radius:var(--radius);border:1px solid var(--border-light);overflow-y:auto}
+.pdv-left{flex:1;display:flex;flex-direction:column;gap:.5rem;min-width:280px;background:var(--white);padding:1rem;border-radius:var(--radius);border:1px solid var(--border-light)}
 .pdv-right{flex:1.2;display:flex;flex-direction:column;background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius);overflow:hidden}
 .pdv-type-selector{display:flex;gap:.3rem;margin-bottom:.3rem}
-.pdv-type-btn{flex:1;padding:.5rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;text-align:center;font-weight:600;font-size:.75rem;color:var(--text-secondary)}
+.pdv-type-btn{flex:1;padding Kent=.5rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;text-align:center;font-weight:600;font-size:.75rem;color:var(--text-secondary)}
 .pdv-type-btn.active{border-color:var(--primary);background:#ffeaea;color:var(--primary)}
 .form-group{display:flex;flex-direction:column;gap:.2rem;position:relative;margin-bottom:.4rem}
 label{font-size:.75rem;font-weight:700;color:var(--text-secondary);text-transform:uppercase}
-input{font-family:var(--font);font-size:.88rem;border:1px solid var(--border);border-radius:var(--radius);padding:.4rem .6rem;outline:none;width:100%}
+input{font-family:var(--font);font-size:.88rem;border:1px solid var(--border);border-radius:var(--radius);padding Kent=.4rem .6rem;outline:none;width:100%}
 input:focus{border-color:var(--primary)}
 .pdv-inputs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;margin-bottom:.4rem}
-.pdv-include-btn{width:100%;padding:.6rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.85rem;font-weight:700;cursor:pointer;text-transform:uppercase}
-.pdv-half-btn{width:100%;padding:.5rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase;margin-top:.3rem}
+.pdv-include-btn{width:100%;padding Kent=.6rem;background:var(--primary);color:#fff;border:none;border-radius:var(--radius);font-size:.85rem;font-weight:700;cursor:pointer;text-transform:uppercase}
+.pdv-half-btn{width:100%;padding Kent=.5rem;background:var(--white);border:2px solid var(--warning);color:var(--warning);border-radius:var(--radius);font-size:.8rem;font-weight:700;cursor:pointer;text-transform:uppercase;margin-top:.3rem}
 .pdv-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.4rem}
-.pdv-action-btn{padding:.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;font-size:.75rem;font-weight:600;text-align:center;color:var(--text-secondary)}
+.pdv-action-btn{padding Kent=.5rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--white);cursor:pointer;font-size:.75rem;font-weight:600;text-align:center;color:var(--text-secondary)}
 .pdv-action-btn.cancel{color:var(--danger)}
-.pdv-finalize-btn{width:100%;padding:.6rem;background:var(--success);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700;margin-top:.4rem}
+.pdv-finalize-btn{width:100%;padding Kent=.6rem;background:var(--success);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:.9rem;font-weight:700;margin-top:.4rem}
 .pdv-cart-header{padding Kent=.5rem .75rem;background:var(--bg);border-bottom:1px solid var(--border-light);font-weight:700;font-size:.8rem}
 .pdv-cart-table{flex:1;overflow-y:auto}
 table{width:100%;border-collapse:collapse}
-thead th{font-size:.7rem;font-weight:700;color:var(--text-secondary);background:var(--bg);padding:.5rem;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase}
+thead th{font-size:.7rem;font-weight:700;color:var(--text-secondary);background:var(--bg);padding Kent=.5rem;text-align:left;border-bottom:1px solid var(--border);text-transform:uppercase}
 tbody td{padding Kent=.5rem;font-size:.8rem;border-bottom:1px solid var(--border-light)}
 .right{text-align:right}
 .pdv-subtotal-bar{padding Kent=.6rem 1rem;background:var(--primary);display:flex;align-items:center;justify-content:space-between}
@@ -88,7 +87,7 @@ tbody td{padding Kent=.5rem;font-size:.8rem;border-bottom:1px solid var(--border
     <div class="nav-item" onclick="switchPage('clientes')">👥 Cadastro de Clientes</div>
     <div class="nav-item" onclick="switchPage('relatorio')">📊 Relatório de Vendas</div>
     <div class="nav-item" onclick="switchPage('config')">⚙ Configurações</div>
-    <div class="nav-item" onclick="logout()" style="margin-top:auto;border-top:1px solid rgba(255,255,255,.1)">🚪 Sair</div>
+    <div class="nav-item" onclick="if(confirm('Sair do caixa?')) location.reload();" style="margin-top:auto;border-top:1px solid rgba(255,255,255,.1)">🚪 Sair</div>
   </nav>
 </aside>
 
@@ -103,7 +102,6 @@ tbody td{padding Kent=.5rem;font-size:.8rem;border-bottom:1px solid var(--border
       <div class="breadcrumb">Dom Valori / <span class="current">PDV de Vendas</span></div>
       <div class="pdv-container">
         
-        <!-- PAINEL CENTRAL DE FORMULARIO -->
         <div class="pdv-left">
           <div class="form-group">
             <label>Tipo de Venda</label>
